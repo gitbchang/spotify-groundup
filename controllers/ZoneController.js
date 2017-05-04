@@ -21,17 +21,17 @@ module.exports = {
     })
   },
   create: function(params, callback){
-
     // in the future, must add input error handling
     // use regex?
-    var zips = params['zipCodes'];
-    var zip = zips.split(',');
-    var newZips = [];
-    zip.forEach(function(zipCode){
-      newZips.push(zipCode.trim());
-    });
+    
+    // var zips = params['zipCodes'];
+    // var zip = zips.split(',');
+    // var newZips = [];
+    // zip.forEach(function(zipCode){
+    //   newZips.push(zipCode.trim());
+    // });
 
-    params['zipCodes'] = newZips;
+    // params['zipCodes'] = newZips;
 
     Zone.create(params, function(err, zone){
       if(err){
@@ -39,7 +39,7 @@ module.exports = {
         return;
       }
       callback(null, zone);
-    })
+    });
   },
   update: function(id, params, callback){
     Zone.findByIdAndUpdate(id, params, {new:true}, function(err, zone){

@@ -11,11 +11,11 @@ var dbHeroku = 'mongodb://heroku_n7gnhzpc:v40709mc50122j2cfava108ntl@ds129651.ml
 
 
 
-mongoose.connect(dbHeroku, function(err, res){
+mongoose.connect(dbUrl, function(err, res){
   if(err){
     console.log('DB CONNECTION FAILED', err);
   } else {
-    console.log('DB CONNECTION SUCCESS', dbHeroku);
+    console.log('DB CONNECTION SUCCESS', dbUrl);
   }
 });
 

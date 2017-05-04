@@ -1,51 +1,66 @@
 import React, {Component} from 'react';
 
-import Comment from '../presentation/Comment';
+import { APIManager } from '../../utils/';
 
+// import Comment from '../presentation/Comment';
+import { CreateComment, Comment } from '../presentation/';
 import styles from './styles';
 
 class Comments extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: {
-        userName: '',
-        body: '',
-        timestamp: ''
-      },
       commentList: []
     }
   }
 
-  submitComment = () => {
-    console.log("submitted");
-    let updatedList = Object.assign([], this.state.commentList);
-    updatedList.push(this.state.comment);
+  componentDidMount() {
 
-    this.setState({commentList: updatedList});
+    APIManager.get('api/comment', null, (err, response) => {
+      if(err) {
+        console.log("error", err.message);
+        return;
+      }
+      this.setState({commentList: response.results});
+    });    
+
+  }
+
+  submitComment = (comment) => {
+    console.log("submitted");
+    console.log("comment object", comment);
+    // let newComment = Object.assign({}, this.state.comment);
+
+    APIManager.post('api/comment', comment, (err, response) => {
+      if(err) {
+        console.log("error", err.message);
+        return
+      }
+      console.log("Comment created", JSON.stringify(response));
+      let updatedCommentList = Object.assign([], this.state.commentList);
+      updatedCommentList.push(response.result);
+      this.setState({
+        commentList: updatedCommentList
+      });
+    });
+
   };
 
-  updateUsername = (e) => {
+  // updateUsername = (e) => {
 
-    let updatedComment = Object.assign({}, this.state.comment);
-    updatedComment['userName'] = e.target.value;
+  //   let updatedComment = Object.assign({}, this.state.comment);
+  //   updatedComment['username'] = e.target.value;
 
-    this.setState({comment: updatedComment});
-  }
+  //   this.setState({comment: updatedComment});
+  // }
 
-  updateBody = (e) => {
-    let updatedComment = Object.assign({}, this.state.comment);
-    updatedComment['body'] = e.target.value;
+  // updateBody = (e) => {
+  //   let updatedComment = Object.assign({}, this.state.comment);
+  //   updatedComment['body'] = e.target.value;
 
-    this.setState({comment: updatedComment});
-  }
+  //   this.setState({comment: updatedComment});
+  // }
 
-  updateTime = (e) => {
-    let updatedComment = Object.assign({}, this.state.comment);
-    updatedComment['timestamp'] = e.target.value;
-
-    this.setState({comment: updatedComment});
-  }
 
   render() {
     const allComments = this
@@ -64,25 +79,7 @@ class Comments extends Component {
           <ul style={styles.comment.commentList}>
             {allComments}
           </ul>
-
-          <input
-            onChange={this.updateUsername}
-            className="form-control"
-            type="text"
-            placeholder="Username"/><br/>
-          <input
-            onChange={this.updateBody}
-            className="form-control"
-            type="text"
-            placeholder="Comment"/><br/>
-          <input type="text"
-            onChange={this.updateTime}
-            className="form-control"
-            type="text"
-            placeholder="timestamp"
-          /><br/>
-
-          <button onClick={this.submitComment} className="btn btn-info" type="submit">Submit Comment</button>
+          <CreateComment newComments={this.submitComment} />
         </div>
       </div>
     );

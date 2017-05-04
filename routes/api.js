@@ -56,7 +56,7 @@ router.post('/:resource', function (req, res, next) {
   let data = req.body;
   let controller = controllers[resource];
 
-  controller.create(req.body, function (err, result) {
+  controller.create(req.body, function (err, results) {
     if (err) {
       res.json({
         confirmation: 'fail',
@@ -65,8 +65,8 @@ router.post('/:resource', function (req, res, next) {
       return;
     }
     res.json({
-      confirmation: 'success',
-      result: result
+      confirmation: 'success-post',
+      result: results
     });
   });
 
@@ -87,7 +87,7 @@ router.put('/:resource/:id', function(req, res, next) {
       return;
     }
     res.json({
-      confirmation: 'success',
+      confirmation: 'success-test',
       result: result
     });
   });
