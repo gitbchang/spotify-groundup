@@ -4,7 +4,7 @@ class SpotifyHome extends Component {
   render() {
     return (
       <div className='ui container'>
-        SPOTIFY HOME CONTAINER
+        <h1>SPOTIFY HOME CONTAINER</h1>
       </div>
     );
   }

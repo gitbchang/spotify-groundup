@@ -2,6 +2,7 @@
 
 #semantic-ui
 /semantic
+/public/semantic
 
 # dependencies
 /node_modules
