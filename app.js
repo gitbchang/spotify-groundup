@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-var dbUrl = 'mongodb://localhost/yak-yik';
+var dbUrl = 'mongodb://localhost/bchang-spotify';
 var dbHeroku = 'mongodb://heroku_n7gnhzpc:v40709mc50122j2cfava108ntl@ds129651.mlab.com:29651/heroku_n7gnhzpc';
 
 

@@ -31,7 +31,6 @@ class Zones extends Component {
     // clean up object before sending to API
     console.log('new zone before modification', newZone);
     newZone['zipCodes'] = newZone.zipCode.split(',');
-    newZone['timestamp'] = '';
     delete newZone.zipCode;
     delete newZone.numComments;
 

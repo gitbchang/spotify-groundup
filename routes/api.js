@@ -65,7 +65,7 @@ router.post('/:resource', function (req, res, next) {
       return;
     }
     res.json({
-      confirmation: 'success-post',
+      confirmation: 'success',
       result: results
     });
   });
@@ -87,7 +87,7 @@ router.put('/:resource/:id', function(req, res, next) {
       return;
     }
     res.json({
-      confirmation: 'success-test',
+      confirmation: 'success',
       result: result
     });
   });
