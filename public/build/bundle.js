@@ -12756,7 +12756,7 @@ var Home = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'bg-black' },
+        { className: 'bg-black-80' },
         _react2.default.createElement(_presentation.SpotifyHome, null),
         _react2.default.createElement(
           _reactRouterDom.Switch,
@@ -31892,8 +31892,8 @@ var Main = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'vh-100' },
-        'This is the main'
+        { className: 'vh-100 pa5 ph7-l hot-pink' },
+        'THIS IS THE MAIN'
       );
     }
   }]);
@@ -31944,7 +31944,7 @@ var SpotifyFooter = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'bg-black', style: { bottom: 0 } },
+        { className: 'bg-black mt3', style: { bottom: 0 } },
         _react2.default.createElement(
           'footer',
           { className: 'pv4 ph3 ph5-m ph6-l mid-gray' },
@@ -32008,39 +32008,29 @@ var SpotifyHome = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         "nav",
-        { className: "db dt-l w-100 border-box pa5 ph7-l" },
+        { className: "db dt-l w-100 border-box pa5 ph7-l bg-black" },
         _react2.default.createElement(
           "a",
-          { className: "db dtc-l v-mid hot-pink link dim w-100 w-25-l tc tl-l mb2 mb0-l", href: "#", title: "Home" },
-          _react2.default.createElement("img", { src: "http://tachyons.io/img/logo.jpg", "class": "dib w2 h2 br-100", alt: "Site Name" })
+          { className: "db dtc-l v-mid center link dim w-100 w-25-l tc tl-l mb2 ", href: "/", title: "Home" },
+          _react2.default.createElement("img", { src: "/images/spotify-logo.svg", className: "dib w4 h4 br-100", alt: "Site Name" })
         ),
         _react2.default.createElement(
           "div",
           { className: "db dtc-l v-mid w-100 w-75-l tc tr-l" },
           _react2.default.createElement(
             "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "#", title: "Home" },
-            "Home"
+            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "/zones", title: "Home" },
+            "Zones"
           ),
           _react2.default.createElement(
             "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "#", title: "How it Works" },
-            "How it Works"
-          ),
-          _react2.default.createElement(
-            "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "#", title: "Blog" },
-            "Blog"
-          ),
-          _react2.default.createElement(
-            "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "#", title: "Press" },
-            "Press"
+            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l", href: "/comments", title: "How it Works" },
+            "Comments"
           ),
           _react2.default.createElement(
             "a",
             { className: "link dim hot-pink f6 f5-l dib", href: "#", title: "Contact" },
-            "Contact"
+            "About"
           )
         )
       );

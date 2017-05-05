@@ -9,7 +9,7 @@ import styles from './styles';
 class Home extends Component {
   render() {
     return (
-      <div className='bg-black'>
+      <div className='bg-black-80'>
         <SpotifyHome />
         <Switch>
           <Route exact path='/' component={Main}/>
