@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
-import Zones from '../containers/Zones';
-import Comments from '../containers/Comments';
-import SpotifyHome from '../containers/SpotifyHome';
+import { Main, Zones, Comments } from '../containers/';
+import { SpotifyHome, SpotifyFooter } from '../presentation/';
 
 import styles from './styles';
 
 class Home extends Component {
   render() {
     return (
-      <div className='container'>
+      <div className='bg-black'>
+        <SpotifyHome />
         <Switch>
-          <Route exact path='/' component={SpotifyHome}/>
+          <Route exact path='/' component={Main}/>
           <Route path='/zones' component={Zones}/>
           <Route path='/comments' component={Comments}/>
         </Switch>
+        <SpotifyFooter />
       </div>
     );
   }

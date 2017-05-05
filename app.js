@@ -38,6 +38,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// create a static path for linking css files in node modules
+app.use('/style', express.static(__dirname + '/node_modules/'));
+
 app.use('/', index);
 app.use('/api', api);
 
