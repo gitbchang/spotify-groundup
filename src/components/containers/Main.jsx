@@ -40,7 +40,7 @@ class Main extends Component {
         {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
-              <TrackGallery />
+              <TrackGallery tracks={this.state.tracks} />
             </div>
           : <div></div>
         }
