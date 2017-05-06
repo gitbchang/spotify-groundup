@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
 import { Main, Zones, Comments } from '../containers/';
-import { SpotifyHome, SpotifyFooter } from '../presentation/';
+import { SpotifyHome, SpotifyFooter, About } from '../presentation/';
 
 import styles from './styles';
 
@@ -15,6 +15,7 @@ class Home extends Component {
           <Route exact path='/' component={Main}/>
           <Route path='/zones' component={Zones}/>
           <Route path='/comments' component={Comments}/>
+          <Route path='/About' component={About}/>
         </Switch>
         <SpotifyFooter />
       </div>
