@@ -14212,29 +14212,34 @@ var About = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'vh-75 pa5 ph7-l hot-pink' },
+        { className: 'vh-75 pa5 ph7-l' },
         _react2.default.createElement(
           'article',
           { className: 'pa3 pa5-ns' },
           _react2.default.createElement(
             'h1',
-            { className: 'f3 f1-m f-headline-l' },
+            { className: 'f3 f1-m f-headline-l hot-pink' },
             'About'
           ),
           _react2.default.createElement(
             'p',
-            { className: 'measure lh-copy' },
+            { className: 'measure lh-copy white' },
             'This App will use the Spotify API to search for songs and song metrics'
           ),
           _react2.default.createElement(
             'h1',
-            { className: 'f3 f1-m f-headline-l' },
-            'Technology Used'
+            { className: 'f3 f1-m f-headline-l hot-pink' },
+            'Technology / Node Packages Used'
           ),
           _react2.default.createElement(
             'p',
-            { className: 'measure lh-copy' },
-            'React, SpotifyAPI, Webpack'
+            { className: 'measure lh-copy white' },
+            'Mongo, React, React-Router, SpotifAPI'
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'measure lh-copy white' },
+            'Tachyons, Axios, Webpack'
           )
         )
       );
@@ -14720,17 +14725,17 @@ var SpotifyHome = function (_Component) {
           { className: "db dtc-l v-mid w-100 w-75-l tc tr-l" },
           _react2.default.createElement(
             "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l hover-white-90", href: "/zones", title: "Home" },
+            { className: "link white f6 f5-l dib mr3 mr4-l hover-hot-pink", href: "/zones", title: "Home" },
             "Zones"
           ),
           _react2.default.createElement(
             "a",
-            { className: "link dim hot-pink f6 f5-l dib mr3 mr4-l hover-white-90", href: "/comments", title: "How it Works" },
+            { className: "link white  f6 f5-l dib mr3 mr4-l hover-hot-pink", href: "/comments", title: "How it Works" },
             "Comments"
           ),
           _react2.default.createElement(
             "a",
-            { className: "link dim hot-pink f6 f5-l dib hover-white-90", href: "/about", title: "Contact" },
+            { className: "link white  f6 f5-l dib hover-hot-pink", href: "/about", title: "Contact" },
             "About"
           )
         )
@@ -14805,7 +14810,7 @@ var SpotifySearchInput = function (_Component) {
             { className: 'measure' },
             _react2.default.createElement(
               'label',
-              { htmlFor: 'name', className: 'f6 b db mb2 hot-pink' },
+              { htmlFor: 'name', className: 'f6 b db mb2 white' },
               'Search Songs'
             ),
             _react2.default.createElement(
@@ -14826,7 +14831,7 @@ var SpotifySearchInput = function (_Component) {
                 'a',
                 {
                   onClick: this.submitQuery,
-                  className: 'f6 link dim br2 ba ph3 pv2 mb2 dib hot-pink hover-white-90 no-underline',
+                  className: 'f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink no-underline',
                   href: '#0' },
                 'Search'
               )

@@ -22,7 +22,7 @@ class SpotifySearchInput extends Component {
       <div className='fl w-100' >
         <form className="pa1 black-80" onSubmit={this.submitQuery}>
           <div className="measure">
-            <label htmlFor="name" className="f6 b db mb2 hot-pink">Search Songs
+            <label htmlFor="name" className="f6 b db mb2 white">Search Songs
             </label>
             <div className='fl w-90'>
               <input
@@ -36,7 +36,7 @@ class SpotifySearchInput extends Component {
             <div className='fl w-10 ph3'>
               <a
                 onClick={this.submitQuery}
-                className="f6 link dim br2 ba ph3 pv2 mb2 dib hot-pink hover-white-90 no-underline"                
+                className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink no-underline"                
                 href="#0">Search</a>
             </div>
           </div>
