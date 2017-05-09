@@ -13,7 +13,8 @@ class SpotifySearchInput extends Component {
     this.setState({query: e.target.value});
   }
   
-  submitQuery = () => {
+  submitQuery = (e) => {
+    e.preventDefault();
     this.props.theSearch(this.state.query);
   }
 

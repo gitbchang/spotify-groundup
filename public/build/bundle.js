@@ -21995,7 +21995,8 @@ var SpotifySearchInput = function (_Component) {
       _this.setState({ query: e.target.value });
     };
 
-    _this.submitQuery = function () {
+    _this.submitQuery = function (e) {
+      e.preventDefault();
       _this.props.theSearch(_this.state.query);
     };
 
