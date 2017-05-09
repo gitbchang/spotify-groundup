@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
 
-router.get('/zones', function(req, res, next) {
+router.get('/datavisual', function(req, res, next) {
   res.render('index', { title: 'Zones' });
 });
 

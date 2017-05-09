@@ -20021,7 +20021,7 @@ var Home = function (_Component) {
           _reactRouterDom.Switch,
           null,
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.Main }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/zones', component: _containers.Zones }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/datavisual', component: _containers.DataVisualization }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/comments', component: _containers.Comments }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/About', component: _presentation.About })
         ),
@@ -21335,7 +21335,7 @@ exports.default = Zones;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Zones = exports.Comments = exports.Main = undefined;
+exports.DataVisualization = exports.Zones = exports.Comments = exports.Main = undefined;
 
 var _Main = __webpack_require__(244);
 
@@ -21349,11 +21349,16 @@ var _Zones = __webpack_require__(245);
 
 var _Zones2 = _interopRequireDefault(_Zones);
 
+var _DataVisualization = __webpack_require__(538);
+
+var _DataVisualization2 = _interopRequireDefault(_DataVisualization);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Main = _Main2.default;
 exports.Comments = _Comments2.default;
 exports.Zones = _Zones2.default;
+exports.DataVisualization = _DataVisualization2.default;
 
 /***/ }),
 /* 247 */
@@ -21468,7 +21473,7 @@ var About = function (_Component) {
           _react2.default.createElement(
             'p',
             { className: 'measure lh-copy white' },
-            'Mongo, React, React-Router, SpotifAPI'
+            'Mongo, React, React-Router, SpotifyAPI'
           ),
           _react2.default.createElement(
             'p',
@@ -21966,8 +21971,8 @@ var SpotifyHome = function (_Component) {
           { className: "db dtc-l v-mid w-100 w-75-l tc tr-l" },
           _react2.default.createElement(
             "a",
-            { className: "link white f6 f5-l dib mr3 mr4-l hover-hot-pink", href: "/zones", title: "Home" },
-            "Zones"
+            { className: "link white f6 f5-l dib mr3 mr4-l hover-hot-pink", href: "/datavisual", title: "Data Visuals" },
+            "Data Visuals"
           ),
           _react2.default.createElement(
             "a",
@@ -51248,6 +51253,56 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 538 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DataVisualization = function (_Component) {
+  _inherits(DataVisualization, _Component);
+
+  function DataVisualization() {
+    _classCallCheck(this, DataVisualization);
+
+    return _possibleConstructorReturn(this, (DataVisualization.__proto__ || Object.getPrototypeOf(DataVisualization)).apply(this, arguments));
+  }
+
+  _createClass(DataVisualization, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'min-vh-100 pa5 ph7-l hot-pink' },
+        'Data Visualization!'
+      );
+    }
+  }]);
+
+  return DataVisualization;
+}(_react.Component);
+
+exports.default = DataVisualization;
 
 /***/ })
 /******/ ]);

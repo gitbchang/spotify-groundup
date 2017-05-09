@@ -11,7 +11,7 @@ class About extends Component {
           </p>
           <h1 className="f3 f1-m f-headline-l hot-pink">Technology / Node Packages Used</h1>
           <p className="measure lh-copy white">
-            Mongo, React, React-Router, SpotifAPI
+            Mongo, React, React-Router, SpotifyAPI
           </p>
           <p className="measure lh-copy white">
             Tachyons, Axios, Webpack
