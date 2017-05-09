@@ -21142,7 +21142,7 @@ var Main = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'vh-75 pa5 ph7-l' },
+        { className: 'vh-100 pa5 ph7-l' },
         _react2.default.createElement(_presentation.SpotifySearchInput, { theSearch: this.searchSpotify }),
         this.state.artist !== null ? _react2.default.createElement(
           'div',

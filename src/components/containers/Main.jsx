@@ -35,7 +35,7 @@ class Main extends Component {
 
   render() {
     return (
-      <div className='vh-75 pa5 ph7-l'>
+      <div className='vh-100 pa5 ph7-l'>
         <SpotifySearchInput theSearch={this.searchSpotify}/>        
         {this.state.artist !== null
           ? <div>
