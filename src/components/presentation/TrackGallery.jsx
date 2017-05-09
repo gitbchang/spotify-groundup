@@ -14,27 +14,23 @@ class TrackGallery extends Component {
 
   playAudio = (previewUrl) => {
     let audio = new Audio(previewUrl);
-    if(!this.state.playing) {
+    if (!this.state.playing) {
       audio.play();
-      this.setState({
-        playing: true,
-        playingUrl: previewUrl,
-        audio: audio
-      });
+      this.setState({playing: true, playingUrl: previewUrl, audio: audio});
     } else {
-        if (this.state.playingUrl === previewUrl) {
-          this.state.audio.pause();
-          this.setState({
-            playing: false
-          })
-        } else {
-          this.state.audio.pause();
-          audio.play();
-          this.setState({            
-            playing: true,
-            playingUrl: previewUrl,
-            audio: audio
-          })
+      if (this.state.playingUrl === previewUrl) {
+        this
+          .state
+          .audio
+          .pause();
+        this.setState({playing: false})
+      } else {
+        this
+          .state
+          .audio
+          .pause();
+        audio.play();
+        this.setState({playing: true, playingUrl: previewUrl, audio: audio})
       }
     }
   }
@@ -42,26 +38,13 @@ class TrackGallery extends Component {
   render() {
     const tracks = this.props.tracks;
     return (
-      <div className='hot-pink'>
+      <div className='w-100 flex flex-wrap'>
         {tracks.map((track, k) => {
           const trackImg = track.album.images[0].url;
           console.log('track', track);
-          return (            
-            <div
-              key={k}
-              className='track'
-              onClick={() => this.playAudio(track.preview_url)}>
-              <img src={trackImg} className='track-img' alt="track"/>
-              <div className='track-play'>
-                <div className='track-play-inner'>
-
-                  {this.state.playingUrl === track.preview_url
-                    ? <Glyphicon glyph='pause'></Glyphicon>
-                    : <Glyphicon glyph='play'></Glyphicon>
-                  }
-                </div>
-              </div>
-              <p className='track-text'>{track.name}</p>
+          return (
+            <div key={k} style={{width: 20+'%'}}  className='dim cf pa2' >
+              <img src={trackImg} alt="albumArt" className='db outline black-10'  />
             </div>
           )
         })}
