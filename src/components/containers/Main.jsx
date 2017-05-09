@@ -8,7 +8,12 @@ class Main extends Component {
     super(props);
     this.state = {
       artist: null,
-      tracks: []
+      tracks: [],
+      trackPlayer: {
+        playingUrl: '',
+        audio: null,
+        playing: false
+      }
     }
   }
 
@@ -33,6 +38,44 @@ class Main extends Component {
     });
   }
 
+  playAudio = (previewUrl) => {
+    let audio = new Audio(previewUrl);
+    if (!this.state.trackPlayer.playing) {
+      audio.play();
+      this.setState({
+        trackPlayer: {
+          playing: true,
+          playingUrl: previewUrl,
+          audio: audio
+        }
+      });
+      // {playing: true, playingUrl: previewUrl, audio: audio}
+    } else {
+      if (this.state.trackPlayer.playingUrl === previewUrl) {
+        this
+          .state
+          .trackPlayer
+          .audio
+          .pause();
+        this.setState(
+          {trackPlayer: {
+              playing: false
+            }
+           }
+          )
+      } else {
+        this
+          .state
+          .trackPlayer
+          .audio
+          .pause();
+        audio.play();        
+        this.setState({playing: true, playingUrl: previewUrl, audio: audio})
+      }
+    }
+  }
+
+
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
@@ -40,7 +83,7 @@ class Main extends Component {
         {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
-              <TrackGallery tracks={this.state.tracks} />
+              <TrackGallery tracks={this.state.tracks} play={this.playAudio} currentSong={this.state.trackPlayer} />
             </div>
           : <div></div>
         }

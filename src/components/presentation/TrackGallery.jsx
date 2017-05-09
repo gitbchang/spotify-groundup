@@ -3,36 +3,9 @@ import styles from './styles';
 import {Glyphicon} from 'react-bootstrap';
 
 class TrackGallery extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playingUrl: '',
-      audio: null,
-      playing: false
-    }
-  }
 
-  playAudio = (previewUrl) => {
-    let audio = new Audio(previewUrl);
-    if (!this.state.playing) {
-      audio.play();
-      this.setState({playing: true, playingUrl: previewUrl, audio: audio});
-    } else {
-      if (this.state.playingUrl === previewUrl) {
-        this
-          .state
-          .audio
-          .pause();
-        this.setState({playing: false})
-      } else {
-        this
-          .state
-          .audio
-          .pause();
-        audio.play();
-        this.setState({playing: true, playingUrl: previewUrl, audio: audio})
-      }
-    }
+  songAudio = (previewUrl) => {
+    this.props.play(previewUrl);
   }
 
   render() {
@@ -49,10 +22,10 @@ class TrackGallery extends Component {
               width: 20 + '%'
             }}
               className='cf pa2'>
-              <div className='dim' onClick={() => this.playAudio(track.preview_url)} >
+              <div className='dim' onClick={() => this.songAudio(track.preview_url)} >
                 <img src={trackImg} alt="albumArt" className='db outline white-10'/>
                 <div className='tc white-70 outline mb3' >
-                  {this.state.playingUrl === track.preview_url
+                  {this.props.currentSong.playingUrl === track.preview_url
                     ? <Glyphicon glyph='pause'></Glyphicon>
                     : <Glyphicon glyph='play'></Glyphicon>
                   }

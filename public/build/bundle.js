@@ -21130,9 +21130,41 @@ var Main = function (_Component) {
       });
     };
 
+    _this.playAudio = function (previewUrl) {
+      var audio = new Audio(previewUrl);
+      if (!_this.state.trackPlayer.playing) {
+        audio.play();
+        _this.setState({
+          trackPlayer: {
+            playing: true,
+            playingUrl: previewUrl,
+            audio: audio
+          }
+        });
+        // {playing: true, playingUrl: previewUrl, audio: audio}
+      } else {
+        if (_this.state.trackPlayer.playingUrl === previewUrl) {
+          _this.state.trackPlayer.audio.pause();
+          _this.setState({ trackPlayer: {
+              playing: false
+            }
+          });
+        } else {
+          _this.state.trackPlayer.audio.pause();
+          audio.play();
+          _this.setState({ playing: true, playingUrl: previewUrl, audio: audio });
+        }
+      }
+    };
+
     _this.state = {
       artist: null,
-      tracks: []
+      tracks: [],
+      trackPlayer: {
+        playingUrl: '',
+        audio: null,
+        playing: false
+      }
     };
     return _this;
   }
@@ -21148,7 +21180,7 @@ var Main = function (_Component) {
           'div',
           null,
           _react2.default.createElement(_presentation.ArtistProfile, { searchArtist: this.state.artist }),
-          _react2.default.createElement(_presentation.TrackGallery, { tracks: this.state.tracks })
+          _react2.default.createElement(_presentation.TrackGallery, { tracks: this.state.tracks, play: this.playAudio, currentSong: this.state.trackPlayer })
         ) : _react2.default.createElement('div', null)
       );
     }
@@ -22091,34 +22123,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var TrackGallery = function (_Component) {
   _inherits(TrackGallery, _Component);
 
-  function TrackGallery(props) {
+  function TrackGallery() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     _classCallCheck(this, TrackGallery);
 
-    var _this = _possibleConstructorReturn(this, (TrackGallery.__proto__ || Object.getPrototypeOf(TrackGallery)).call(this, props));
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-    _this.playAudio = function (previewUrl) {
-      var audio = new Audio(previewUrl);
-      if (!_this.state.playing) {
-        audio.play();
-        _this.setState({ playing: true, playingUrl: previewUrl, audio: audio });
-      } else {
-        if (_this.state.playingUrl === previewUrl) {
-          _this.state.audio.pause();
-          _this.setState({ playing: false });
-        } else {
-          _this.state.audio.pause();
-          audio.play();
-          _this.setState({ playing: true, playingUrl: previewUrl, audio: audio });
-        }
-      }
-    };
-
-    _this.state = {
-      playingUrl: '',
-      audio: null,
-      playing: false
-    };
-    return _this;
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TrackGallery.__proto__ || Object.getPrototypeOf(TrackGallery)).call.apply(_ref, [this].concat(args))), _this), _this.songAudio = function (previewUrl) {
+      _this.props.play(previewUrl);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(TrackGallery, [{
@@ -22144,13 +22162,13 @@ var TrackGallery = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'dim', onClick: function onClick() {
-                  return _this2.playAudio(track.preview_url);
+                  return _this2.songAudio(track.preview_url);
                 } },
               _react2.default.createElement('img', { src: trackImg, alt: 'albumArt', className: 'db outline white-10' }),
               _react2.default.createElement(
                 'div',
                 { className: 'tc white-70 outline mb3' },
-                _this2.state.playingUrl === track.preview_url ? _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'play' })
+                _this2.props.currentSong.playingUrl === track.preview_url ? _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'play' })
               )
             ),
             _react2.default.createElement(
