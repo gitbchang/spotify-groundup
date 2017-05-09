@@ -1,29 +1,20 @@
 export default {
-  comment: {
-    commentsBox: {
-        padding: 12,
-        background: '#f9f9f9',
-        border: '1px solid #ddd',
-        margin: 2
-    },
-    commentList: {
-      listStyleType: 'none'
-    }
-  },
-  zone: {
-    container: {
-    padding: 16,
-    background: '#f9f9f9',
-    marginTop: 12,
-    border: '1px solid #ddd'
-    },
-    header2: {
-      marginTop: 0,
-      marginBottom: 0
-    },
-    zoneLink: {
-      textDecoration: 'none',
-      color: 'red'
-    }
-  }  
+  trackPlayIcons: {
+    top: 50
+    // position: 'absolute',
+    // textAlign: 'center',
+    // fontSize: 25,
+    // backgroundColor: 'black',
+    // borderRadius: 30,
+    // width: 60,
+    // height: 60,
+    // color: 'white',
+    // paddingTop: 15,
+    // paddingLeft: 5,
+    // marginLeft: 80,
+    // marginTop: 80,
+    // opacity: .5,
+    // top: 960
+    
+  }
 };

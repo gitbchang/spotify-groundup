@@ -21142,7 +21142,7 @@ var Main = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'vh-100 pa5 ph7-l' },
+        { className: 'min-vh-100 pa5 ph7-l' },
         _react2.default.createElement(_presentation.SpotifySearchInput, { theSearch: this.searchSpotify }),
         this.state.artist !== null ? _react2.default.createElement(
           'div',
@@ -22073,6 +22073,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _styles = __webpack_require__(259);
+
+var _styles2 = _interopRequireDefault(_styles);
+
 var _reactBootstrap = __webpack_require__(411);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -22119,6 +22123,8 @@ var TrackGallery = function (_Component) {
   _createClass(TrackGallery, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var tracks = this.props.tracks;
       return _react2.default.createElement(
         'div',
@@ -22128,8 +22134,62 @@ var TrackGallery = function (_Component) {
           console.log('track', track);
           return _react2.default.createElement(
             'div',
-            { key: k, style: { width: 20 + '%' }, className: 'dim cf pa2' },
-            _react2.default.createElement('img', { src: trackImg, alt: 'albumArt', className: 'db outline black-10' })
+            {
+              key: k,
+              style: {
+                width: 20 + '%'
+              },
+              className: 'cf pa2' },
+            _react2.default.createElement(
+              'div',
+              { className: 'dim', onClick: function onClick() {
+                  return _this2.playAudio(track.preview_url);
+                } },
+              _react2.default.createElement('img', { src: trackImg, alt: 'albumArt', className: 'db outline white-10' }),
+              _react2.default.createElement(
+                'div',
+                { className: 'tc white-70 outline mb3' },
+                _this2.state.playingUrl === track.preview_url ? _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'play' })
+              )
+            ),
+            _react2.default.createElement(
+              'dl',
+              { className: 'mt2 f6 lh-copy' },
+              _react2.default.createElement(
+                'dt',
+                { className: 'clip' },
+                'Title'
+              ),
+              _react2.default.createElement(
+                'dd',
+                { className: 'ml0 white truncate w-100' },
+                track.name
+              ),
+              _react2.default.createElement(
+                'dt',
+                { className: 'clip' },
+                'Artist'
+              ),
+              _react2.default.createElement(
+                'dd',
+                { className: 'ml0 gray truncate w-100' },
+                track.artists.length > 1 ? track.artists.map(function (artist, k) {
+                  return k === 0 ? _react2.default.createElement(
+                    'div',
+                    { key: k },
+                    artist.name + ' feat. '
+                  ) : _react2.default.createElement(
+                    'div',
+                    { key: k },
+                    artist.name
+                  );
+                }) : _react2.default.createElement(
+                  'div',
+                  null,
+                  track.artists[0].name
+                )
+              )
+            )
           );
         })
       );
@@ -22257,32 +22317,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
-  comment: {
-    commentsBox: {
-      padding: 12,
-      background: '#f9f9f9',
-      border: '1px solid #ddd',
-      margin: 2
-    },
-    commentList: {
-      listStyleType: 'none'
-    }
-  },
-  zone: {
-    container: {
-      padding: 16,
-      background: '#f9f9f9',
-      marginTop: 12,
-      border: '1px solid #ddd'
-    },
-    header2: {
-      marginTop: 0,
-      marginBottom: 0
-    },
-    zoneLink: {
-      textDecoration: 'none',
-      color: 'red'
-    }
+  trackPlayIcons: {
+    top: 50
+    // position: 'absolute',
+    // textAlign: 'center',
+    // fontSize: 25,
+    // backgroundColor: 'black',
+    // borderRadius: 30,
+    // width: 60,
+    // height: 60,
+    // color: 'white',
+    // paddingTop: 15,
+    // paddingLeft: 5,
+    // marginLeft: 80,
+    // marginTop: 80,
+    // opacity: .5,
+    // top: 960
+
   }
 };
 
