@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import Autosuggest from 'react-autosuggest';
+
 class SpotifySearchInput extends Component {
   constructor(props) {
     super(props);
