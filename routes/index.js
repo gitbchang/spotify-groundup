@@ -18,4 +18,8 @@ router.get('/about', function(req, res, next) {
   res.render('index', { title: 'About Page' });
 });
 
+router.get('*', function(req, res, next){
+  res.render('index', { title: 'About Page' });
+});
+
 module.exports = router;
