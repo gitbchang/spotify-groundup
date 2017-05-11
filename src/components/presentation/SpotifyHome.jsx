@@ -9,8 +9,8 @@ class SpotifyHome extends Component {
         </a>
         <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
           <a className="link white f6 f5-l dib mr3 mr4-l hover-hot-pink" href="/datavisual" title="Data Visuals">Data Visuals</a>
-          <a className="link white  f6 f5-l dib mr3 mr4-l hover-hot-pink" href="/comments" title="How it Works">Comments</a>
-          <a className="link white  f6 f5-l dib hover-hot-pink" href="/about" title="Contact">About</a>
+          <a className="link white  f6 f5-l dib mr3 mr4-l hover-hot-pink" href="/favorites" title="Favorites">Favorites</a>
+          <a className="link white  f6 f5-l dib hover-hot-pink" href="/about" title="About">About</a>
         </div>
       </nav>
         

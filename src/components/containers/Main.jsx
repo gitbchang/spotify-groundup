@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import { SpotifySearchInput, ArtistProfile, TrackGallery } from '../presentation/';
+import { APIManager } from '../../utils/';
 import axios from 'axios';
 
 class Main extends Component {
@@ -15,6 +16,32 @@ class Main extends Component {
         playing: false
       }
     }
+  }
+
+  saveTracks = (iTrack) => {
+    let tracks = this.state.tracks;
+    let savedTrack = tracks[iTrack];
+    let artistArr = [];
+    savedTrack.artists.forEach((artist) => {
+      artistArr.push(artist.name);
+    })
+
+    let trackObject = {
+      trackName: savedTrack.name,
+      artistNames: artistArr,
+      trackId: savedTrack.id,
+      imageUrl: savedTrack.album.images[0].url,
+      trackPreviewUrl: savedTrack.preview_url
+    }
+    console.log(trackObject);
+      APIManager.post('api/track', trackObject, (err, response) => {
+        if(err) {
+          console.log("error", err.message);
+          return;
+        }
+        console.log('TRACK SAVED', JSON.stringify(response));
+
+      });
   }
 
   searchSpotify = (query) => {
@@ -83,7 +110,7 @@ class Main extends Component {
         {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
-              <TrackGallery tracks={this.state.tracks} play={this.playAudio} currentSong={this.state.trackPlayer} />
+              <TrackGallery tracks={this.state.tracks} fav={this.saveTracks} play={this.playAudio} currentSong={this.state.trackPlayer} />
             </div>
           : <div></div>
         }

@@ -1,20 +1,11 @@
-import React, {Component} from 'react';
-import {Glyphicon} from 'react-bootstrap';
+import React, { Component } from 'react';
 
-class TrackGallery extends Component {
-
-  songAudio = (previewUrl) => {
-    this.props.play(previewUrl);
-  }
-
-  saveTrack = (iTrack) => {
-    this.props.fav(iTrack);
-  }
-
+class FavoriteGallery extends Component {
   render() {
     const tracks = this.props.tracks;
     return (
-      <div className='w-100 flex flex-wrap'>
+      <div>
+              <div className='w-100 flex flex-wrap'>
         {tracks.map((track, k) => {
           const trackImg = track.album.images[0].url;
           console.log('track', track);
@@ -55,8 +46,9 @@ class TrackGallery extends Component {
           )
         })}
       </div>
+      </div>
     );
   }
 }
 
-export default TrackGallery;
+export default FavoriteGallery;
