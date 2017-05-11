@@ -21189,6 +21189,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _presentation = __webpack_require__(67);
 
+var _utils = __webpack_require__(68);
+
 var _axios = __webpack_require__(87);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -21208,6 +21210,31 @@ var Main = function (_Component) {
     _classCallCheck(this, Main);
 
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+    _this.saveTracks = function (iTrack) {
+      var tracks = _this.state.tracks;
+      var savedTrack = tracks[iTrack];
+      var artistArr = [];
+      savedTrack.artists.forEach(function (artist) {
+        artistArr.push(artist.name);
+      });
+
+      var trackObject = {
+        trackName: savedTrack.name,
+        artistNames: artistArr,
+        trackId: savedTrack.id,
+        imageUrl: savedTrack.album.images[0].url,
+        trackPreviewUrl: savedTrack.preview_url
+      };
+      console.log(trackObject);
+      _utils.APIManager.post('api/track', trackObject, function (err, response) {
+        if (err) {
+          console.log("error", err.message);
+          return;
+        }
+        console.log('TRACK SAVED', JSON.stringify(response));
+      });
+    };
 
     _this.searchSpotify = function (query) {
       var BASE_URL = 'https://api.spotify.com/v1/search';
@@ -21280,7 +21307,7 @@ var Main = function (_Component) {
           'div',
           null,
           _react2.default.createElement(_presentation.ArtistProfile, { searchArtist: this.state.artist }),
-          _react2.default.createElement(_presentation.TrackGallery, { tracks: this.state.tracks, play: this.playAudio, currentSong: this.state.trackPlayer })
+          _react2.default.createElement(_presentation.TrackGallery, { tracks: this.state.tracks, fav: this.saveTracks, play: this.playAudio, currentSong: this.state.trackPlayer })
         ) : _react2.default.createElement('div', null)
       );
     }
@@ -22218,8 +22245,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(413);
 
-var _utils = __webpack_require__(68);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22244,29 +22269,8 @@ var TrackGallery = function (_Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TrackGallery.__proto__ || Object.getPrototypeOf(TrackGallery)).call.apply(_ref, [this].concat(args))), _this), _this.songAudio = function (previewUrl) {
       _this.props.play(previewUrl);
-    }, _this.saveTrack = function (e) {
-      var tracks = _this.props.tracks;
-      var savedTrack = tracks[e.target.id];
-      var artistArr = [];
-      savedTrack.artists.forEach(function (artist) {
-        artistArr.push(artist.name);
-      });
-
-      var trackObject = {
-        trackName: savedTrack.name,
-        artistNames: artistArr,
-        trackId: savedTrack.id,
-        imageUrl: savedTrack.album.images[0].url,
-        trackPreviewUrl: savedTrack.preview_url
-      };
-      console.log(trackObject);
-      _utils.APIManager.post('api/track', trackObject, function (err, response) {
-        if (err) {
-          console.log("error", err.message);
-          return;
-        }
-        console.log('TRACK SAVED', JSON.stringify(response));
-      });
+    }, _this.saveTrack = function (iTrack) {
+      _this.props.fav(iTrack);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -22305,7 +22309,7 @@ var TrackGallery = function (_Component) {
             _react2.default.createElement(
               'div',
               { id: k, className: 'tc grow white-70 hover-red outline mb3', onClick: function onClick(e) {
-                  return _this2.saveTrack(e);
+                  return _this2.saveTrack(e.target.id);
                 } },
               _react2.default.createElement(_reactBootstrap.Glyphicon, { id: k, glyph: 'heart' })
             ),

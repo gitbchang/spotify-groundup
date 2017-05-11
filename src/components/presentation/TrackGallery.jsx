@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Glyphicon} from 'react-bootstrap';
-import { APIManager } from '../../utils/';
 
 class TrackGallery extends Component {
 
@@ -8,32 +7,8 @@ class TrackGallery extends Component {
     this.props.play(previewUrl);
   }
 
-  saveTrack = (e) => {    
-    let tracks = this.props.tracks;
-    let savedTrack = tracks[e.target.id];
-    let artistArr = [];
-    savedTrack.artists.forEach((artist) => {
-      artistArr.push(artist.name);
-    })
-
-    let trackObject = {
-      trackName: savedTrack.name,
-      artistNames: artistArr,
-      trackId: savedTrack.id,
-      imageUrl: savedTrack.album.images[0].url,
-      trackPreviewUrl: savedTrack.preview_url
-    }
-    console.log(trackObject);
-      APIManager.post('api/track', trackObject, (err, response) => {
-        if(err) {
-          console.log("error", err.message);
-          return;
-        }
-        console.log('TRACK SAVED', JSON.stringify(response));
-
-      });
-
-
+  saveTrack = (iTrack) => {
+    this.props.fav(iTrack);
   }
 
   render() {
@@ -59,7 +34,7 @@ class TrackGallery extends Component {
                   }
                 </div>
               </div>
-              <div id={k} className='tc grow white-70 hover-red outline mb3' onClick={(e) => this.saveTrack(e)} >
+              <div id={k} className='tc grow white-70 hover-red outline mb3' onClick={(e) => this.saveTrack(e.target.id)} >
                   <Glyphicon id={k} glyph='heart'></Glyphicon>
               </div>
               <dl className="mt2 f6 lh-copy">
