@@ -1,41 +1,76 @@
 import React, {Component} from 'react';
-import { FavoriteGallery } from '../presentation/';
+import {FavoriteGallery} from '../presentation/';
 import {APIManager} from '../../utils/';
-import axios from 'axios'
 
 class Favorites extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favTracks: []
+      favTracks: [],
+      trackPlayer: {
+        playingUrl: '',
+        audio: null,
+        playing: false
+      }
     }
   }
 
-  
-  componentWillMount() {
+  componentDidMount() {
     APIManager.get('api/track', null, (err, response) => {
-      if(err) {
+      if (err) {
         console.log("error", err.message);
         return;
       }
-      console.log("track get response", response);
-      // this.setState({favTracks: response.results});      
-    });    
+      this.setState({favTracks: response.results});
+    });
 
-    // axios({method: 'get', url: 'api/track', params: {}, responseType: 'json'})
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-
-    //   });
   }
-  
+
+  playAudio = (previewUrl) => {
+    let audio = new Audio(previewUrl);
+    if (!this.state.trackPlayer.playing) {
+      audio.play();
+      this.setState({
+        trackPlayer: {
+          playing: true,
+          playingUrl: previewUrl,
+          audio: audio
+        }
+      });
+      // {playing: true, playingUrl: previewUrl, audio: audio}
+    } else {
+      if (this.state.trackPlayer.playingUrl === previewUrl) {
+        this
+          .state
+          .trackPlayer
+          .audio
+          .pause();
+        this.setState({
+          trackPlayer: {
+            playing: false
+          }
+        })
+      } else {
+        this
+          .state
+          .trackPlayer
+          .audio
+          .pause();
+        audio.play();
+        this.setState({playing: true, playingUrl: previewUrl, audio: audio})
+      }
+    }
+  }
 
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
-        <FavoriteGallery tracks={this.state.favTracks} />
+        {this.state.favTracks.length > 0
+          ? <FavoriteGallery
+              tracks={this.state.favTracks}
+              play={this.playAudio}
+              currentSong={this.state.trackPlayer}/>
+          : <div></div>}
       </div>
     );
   }

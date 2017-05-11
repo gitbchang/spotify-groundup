@@ -9,7 +9,7 @@ const axiosUtil = {
       })
       .catch(function (error) {
         callback(error, null);
-      })
+      });
   },
   post: (url, body, callback) => {
     axios({method: 'post', url: url, data: body, responseType: 'json'})

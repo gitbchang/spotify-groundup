@@ -51325,6 +51325,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = __webpack_require__(413);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51348,83 +51350,74 @@ var FavoriteGallery = function (_Component) {
       var _this2 = this;
 
       var tracks = this.props.tracks;
+      console.log("fav gallery", tracks);
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'w-100 flex flex-wrap' },
-          tracks.map(function (track, k) {
-            var trackImg = track.album.images[0].url;
-            console.log('track', track);
-            return _react2.default.createElement(
+        { className: 'w-100 flex flex-wrap' },
+        tracks.map(function (track, k) {
+          return _react2.default.createElement(
+            'div',
+            {
+              key: k,
+              style: {
+                width: 20 + '%'
+              },
+              className: 'cf pa2' },
+            _react2.default.createElement(
               'div',
-              {
-                key: k,
-                style: {
-                  width: 20 + '%'
-                },
-                className: 'cf pa2' },
+              { className: 'dim' },
+              _react2.default.createElement('img', { src: track.imageUrl, alt: 'albumArt', className: 'db outline white-10' }),
               _react2.default.createElement(
                 'div',
-                { className: 'dim', onClick: function onClick() {
-                    return _this2.songAudio(track.preview_url);
-                  } },
-                _react2.default.createElement('img', { src: trackImg, alt: 'albumArt', className: 'db outline white-10' }),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'tc white-70 outline' },
-                  _this2.props.currentSong.playingUrl === track.preview_url ? _react2.default.createElement(Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(Glyphicon, { glyph: 'play' })
-                )
+                { className: 'tc white-70 outline' },
+                _this2.props.currentSong.playingUrl === track.preview_url ? _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'play' })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { id: k, className: 'tc grow white-70 hover-red outline mb3' },
+              _react2.default.createElement(_reactBootstrap.Glyphicon, { id: k, className: 'red', glyph: 'heart' })
+            ),
+            _react2.default.createElement(
+              'dl',
+              { className: 'mt2 f6 lh-copy' },
+              _react2.default.createElement(
+                'dt',
+                { className: 'clip' },
+                'Title'
               ),
               _react2.default.createElement(
-                'div',
-                { id: k, className: 'tc grow white-70 hover-red outline mb3', onClick: function onClick(e) {
-                    return _this2.saveTrack(e.target.id);
-                  } },
-                _react2.default.createElement(Glyphicon, { id: k, glyph: 'heart' })
+                'dd',
+                { className: 'ml0 white truncate w-100' },
+                track.trackName
               ),
               _react2.default.createElement(
-                'dl',
-                { className: 'mt2 f6 lh-copy' },
-                _react2.default.createElement(
-                  'dt',
-                  { className: 'clip' },
-                  'Title'
-                ),
-                _react2.default.createElement(
-                  'dd',
-                  { className: 'ml0 white truncate w-100' },
-                  track.name
-                ),
-                _react2.default.createElement(
-                  'dt',
-                  { className: 'clip' },
-                  'Artist'
-                ),
-                _react2.default.createElement(
-                  'dd',
-                  { className: 'ml0 gray truncate w-100' },
-                  track.artists.length > 1 ? track.artists.map(function (artist, k) {
-                    return k === 0 ? _react2.default.createElement(
-                      'div',
-                      { key: k },
-                      artist.name + ' feat. '
-                    ) : _react2.default.createElement(
-                      'div',
-                      { key: k },
-                      artist.name
-                    );
-                  }) : _react2.default.createElement(
+                'dt',
+                { className: 'clip' },
+                'Artist'
+              ),
+              _react2.default.createElement(
+                'dd',
+                { className: 'ml0 gray truncate w-100' },
+                track.artistNames.length > 1 ? track.artistNames.map(function (artist, k) {
+                  return k === 0 ? _react2.default.createElement(
                     'div',
-                    null,
-                    track.artists[0].name
-                  )
+                    { key: k },
+                    artist + ' feat. '
+                  ) : _react2.default.createElement(
+                    'div',
+                    { key: k },
+                    artist
+                  );
+                }) : _react2.default.createElement(
+                  'div',
+                  null,
+                  track.artistNames[0]
                 )
               )
-            );
-          })
-        )
+            )
+          );
+        })
       );
     }
   }]);
@@ -51455,10 +51448,6 @@ var _presentation = __webpack_require__(67);
 
 var _utils = __webpack_require__(68);
 
-var _axios = __webpack_require__(87);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51475,31 +51464,57 @@ var Favorites = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Favorites.__proto__ || Object.getPrototypeOf(Favorites)).call(this, props));
 
+    _this.playAudio = function (previewUrl) {
+      var audio = new Audio(previewUrl);
+      if (!_this.state.trackPlayer.playing) {
+        audio.play();
+        _this.setState({
+          trackPlayer: {
+            playing: true,
+            playingUrl: previewUrl,
+            audio: audio
+          }
+        });
+        // {playing: true, playingUrl: previewUrl, audio: audio}
+      } else {
+        if (_this.state.trackPlayer.playingUrl === previewUrl) {
+          _this.state.trackPlayer.audio.pause();
+          _this.setState({
+            trackPlayer: {
+              playing: false
+            }
+          });
+        } else {
+          _this.state.trackPlayer.audio.pause();
+          audio.play();
+          _this.setState({ playing: true, playingUrl: previewUrl, audio: audio });
+        }
+      }
+    };
+
     _this.state = {
-      favTracks: []
+      favTracks: [],
+      trackPlayer: {
+        playingUrl: '',
+        audio: null,
+        playing: false
+      }
     };
     return _this;
   }
 
   _createClass(Favorites, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
       _utils.APIManager.get('api/track', null, function (err, response) {
         if (err) {
           console.log("error", err.message);
           return;
         }
-        console.log("track get response", response);
-        // this.setState({favTracks: response.results});      
+        _this2.setState({ favTracks: response.results });
       });
-
-      // axios({method: 'get', url: 'api/track', params: {}, responseType: 'json'})
-      //   .then(function (response) {
-      //     console.log(response);
-      //   })
-      //   .catch(function (error) {
-
-      //   });
     }
   }, {
     key: 'render',
@@ -51507,7 +51522,10 @@ var Favorites = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'min-vh-100 pa5 ph7-l' },
-        _react2.default.createElement(_presentation.FavoriteGallery, { tracks: this.state.favTracks })
+        this.state.favTracks.length > 0 ? _react2.default.createElement(_presentation.FavoriteGallery, {
+          tracks: this.state.favTracks,
+          play: this.playAudio,
+          currentSong: this.state.trackPlayer }) : _react2.default.createElement('div', null)
       );
     }
   }]);
