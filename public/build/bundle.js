@@ -5367,7 +5367,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TrackGallery = exports.ArtistProfile = exports.SpotifySearchInput = exports.About = exports.SpotifyHome = exports.SpotifyFooter = exports.Zone = exports.CreateZone = exports.Comment = exports.CreateComment = undefined;
+exports.FavoriteGallery = exports.TrackGallery = exports.ArtistProfile = exports.SpotifySearchInput = exports.About = exports.SpotifyHome = exports.SpotifyFooter = exports.Zone = exports.CreateZone = exports.Comment = exports.CreateComment = undefined;
 
 var _CreateComment = __webpack_require__(254);
 
@@ -5409,6 +5409,10 @@ var _TrackGallery = __webpack_require__(259);
 
 var _TrackGallery2 = _interopRequireDefault(_TrackGallery);
 
+var _FavoriteGallery = __webpack_require__(540);
+
+var _FavoriteGallery2 = _interopRequireDefault(_FavoriteGallery);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.CreateComment = _CreateComment2.default;
@@ -5421,6 +5425,7 @@ exports.About = _About2.default;
 exports.SpotifySearchInput = _SpotifySearchInput2.default;
 exports.ArtistProfile = _ArtistProfile2.default;
 exports.TrackGallery = _TrackGallery2.default;
+exports.FavoriteGallery = _FavoriteGallery2.default;
 
 /***/ }),
 /* 68 */
@@ -20022,7 +20027,7 @@ var Home = function (_Component) {
           null,
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _containers.Main }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/datavisual', component: _containers.DataVisualization }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/favorites', component: _containers.FavoriteTracks }),
+          _react2.default.createElement(_reactRouterDom.Route, { path: '/favorites', component: _containers.Favorites }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/About', component: _presentation.About })
         ),
         _react2.default.createElement(_presentation.SpotifyFooter, null)
@@ -21121,56 +21126,7 @@ var DataVisualization = function (_Component) {
 exports.default = DataVisualization;
 
 /***/ }),
-/* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var FavoriteTracks = function (_Component) {
-  _inherits(FavoriteTracks, _Component);
-
-  function FavoriteTracks() {
-    _classCallCheck(this, FavoriteTracks);
-
-    return _possibleConstructorReturn(this, (FavoriteTracks.__proto__ || Object.getPrototypeOf(FavoriteTracks)).apply(this, arguments));
-  }
-
-  _createClass(FavoriteTracks, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'min-vh-100 pa5 ph7-l' },
-        'Favorite Tracks'
-      );
-    }
-  }]);
-
-  return FavoriteTracks;
-}(_react.Component);
-
-exports.default = FavoriteTracks;
-
-/***/ }),
+/* 245 */,
 /* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21462,7 +21418,7 @@ exports.default = Zones;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FavoriteTracks = exports.DataVisualization = exports.Zones = exports.Comments = exports.Main = undefined;
+exports.Favorites = exports.DataVisualization = exports.Zones = exports.Comments = exports.Main = undefined;
 
 var _Main = __webpack_require__(246);
 
@@ -21480,9 +21436,9 @@ var _DataVisualization = __webpack_require__(244);
 
 var _DataVisualization2 = _interopRequireDefault(_DataVisualization);
 
-var _FavoriteTracks = __webpack_require__(245);
+var _Favorites = __webpack_require__(541);
 
-var _FavoriteTracks2 = _interopRequireDefault(_FavoriteTracks);
+var _Favorites2 = _interopRequireDefault(_Favorites);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21490,7 +21446,7 @@ exports.Main = _Main2.default;
 exports.Comments = _Comments2.default;
 exports.Zones = _Zones2.default;
 exports.DataVisualization = _DataVisualization2.default;
-exports.FavoriteTracks = _FavoriteTracks2.default;
+exports.Favorites = _Favorites2.default;
 
 /***/ }),
 /* 249 */
@@ -51351,6 +51307,215 @@ var valueEqual = function valueEqual(a, b) {
 };
 
 exports.default = valueEqual;
+
+/***/ }),
+/* 540 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FavoriteGallery = function (_Component) {
+  _inherits(FavoriteGallery, _Component);
+
+  function FavoriteGallery() {
+    _classCallCheck(this, FavoriteGallery);
+
+    return _possibleConstructorReturn(this, (FavoriteGallery.__proto__ || Object.getPrototypeOf(FavoriteGallery)).apply(this, arguments));
+  }
+
+  _createClass(FavoriteGallery, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var tracks = this.props.tracks;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'w-100 flex flex-wrap' },
+          tracks.map(function (track, k) {
+            var trackImg = track.album.images[0].url;
+            console.log('track', track);
+            return _react2.default.createElement(
+              'div',
+              {
+                key: k,
+                style: {
+                  width: 20 + '%'
+                },
+                className: 'cf pa2' },
+              _react2.default.createElement(
+                'div',
+                { className: 'dim', onClick: function onClick() {
+                    return _this2.songAudio(track.preview_url);
+                  } },
+                _react2.default.createElement('img', { src: trackImg, alt: 'albumArt', className: 'db outline white-10' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'tc white-70 outline' },
+                  _this2.props.currentSong.playingUrl === track.preview_url ? _react2.default.createElement(Glyphicon, { glyph: 'pause' }) : _react2.default.createElement(Glyphicon, { glyph: 'play' })
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { id: k, className: 'tc grow white-70 hover-red outline mb3', onClick: function onClick(e) {
+                    return _this2.saveTrack(e.target.id);
+                  } },
+                _react2.default.createElement(Glyphicon, { id: k, glyph: 'heart' })
+              ),
+              _react2.default.createElement(
+                'dl',
+                { className: 'mt2 f6 lh-copy' },
+                _react2.default.createElement(
+                  'dt',
+                  { className: 'clip' },
+                  'Title'
+                ),
+                _react2.default.createElement(
+                  'dd',
+                  { className: 'ml0 white truncate w-100' },
+                  track.name
+                ),
+                _react2.default.createElement(
+                  'dt',
+                  { className: 'clip' },
+                  'Artist'
+                ),
+                _react2.default.createElement(
+                  'dd',
+                  { className: 'ml0 gray truncate w-100' },
+                  track.artists.length > 1 ? track.artists.map(function (artist, k) {
+                    return k === 0 ? _react2.default.createElement(
+                      'div',
+                      { key: k },
+                      artist.name + ' feat. '
+                    ) : _react2.default.createElement(
+                      'div',
+                      { key: k },
+                      artist.name
+                    );
+                  }) : _react2.default.createElement(
+                    'div',
+                    null,
+                    track.artists[0].name
+                  )
+                )
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return FavoriteGallery;
+}(_react.Component);
+
+exports.default = FavoriteGallery;
+
+/***/ }),
+/* 541 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _presentation = __webpack_require__(67);
+
+var _utils = __webpack_require__(68);
+
+var _axios = __webpack_require__(87);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Favorites = function (_Component) {
+  _inherits(Favorites, _Component);
+
+  function Favorites(props) {
+    _classCallCheck(this, Favorites);
+
+    var _this = _possibleConstructorReturn(this, (Favorites.__proto__ || Object.getPrototypeOf(Favorites)).call(this, props));
+
+    _this.state = {
+      favTracks: []
+    };
+    return _this;
+  }
+
+  _createClass(Favorites, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      _utils.APIManager.get('api/track', null, function (err, response) {
+        if (err) {
+          console.log("error", err.message);
+          return;
+        }
+        console.log("track get response", response);
+        // this.setState({favTracks: response.results});      
+      });
+
+      // axios({method: 'get', url: 'api/track', params: {}, responseType: 'json'})
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+
+      //   });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'min-vh-100 pa5 ph7-l' },
+        _react2.default.createElement(_presentation.FavoriteGallery, { tracks: this.state.favTracks })
+      );
+    }
+  }]);
+
+  return Favorites;
+}(_react.Component);
+
+exports.default = Favorites;
 
 /***/ })
 /******/ ]);

@@ -13,12 +13,12 @@ module.exports = {
     });
   },
   findById: function(id, callback){
-    Track.findById(id, function(err, comment){
+    Track.findById(id, function(err, track){
       if(err){
         callback(err, null);
         return;
       }
-      callback(null, comment);
+      callback(null, track);
     })
   },
   create: function(params, callback){
