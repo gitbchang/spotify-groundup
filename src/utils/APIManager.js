@@ -27,53 +27,6 @@ const axiosUtil = {
   }
 };
 
-const superagentUtil = {
-  get: (url, params, callback) => {
-    superagent
-      .get(url)
-      .query(params)
-      .set('Accept', 'application/json')
-      .end((err, response) => {
-        if (err) {
-          callback(err, null);
-        }
-        const confirmation = response.body.confirmation;
-        // we need to check if our API call was a success. The first error handling
-        // checks if we hit the server correctly.
-        if (confirmation != 'success') {
-          callback({
-            message: response.body.message
-          }, null);
-        } else {
-          callback(null, response.body);
-        }
 
-      });
-  },
-  post: (url, body, callback) => {
-    superagent
-      .post(url)
-      .send(body)
-      .set('Accept', 'application/json')
-      .end((err, response) => {
-        if (err) {
-          callback(err, null);
-        }
-        const confirmation = response.body.confirmation;
-        // we need to check if our API call was a success. The first error handling
-        // checks if we hit the server correctly.
-        if (confirmation != 'success') {
-          callback({
-            message: response.body.message
-          }, null);
-        } else {
-          callback(null, response.body);
-        }
-        
-      })
-  },
-  put: () => {}
-};
 
 export default axiosUtil;
-// export default superagentUtil;
