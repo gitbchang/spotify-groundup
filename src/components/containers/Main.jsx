@@ -1,8 +1,18 @@
 import React, {Component} from 'react';
 
-import { SpotifySearchInput, ArtistProfile, TrackGallery } from '../presentation/';
-import { APIManager } from '../../utils/';
+import {SpotifySearchInput, ArtistProfile, TrackGallery} from '../presentation/';
+import {APIManager} from '../../utils/';
 import axios from 'axios';
+
+        function getHashParams() {
+          var hashParams = {};
+          var e, r = /([^&;=]+)=?([^&;]*)/g,
+              q = window.location.hash.substring(1);
+          while ( e = r.exec(q)) {
+             hashParams[e[1]] = decodeURIComponent(e[2]);
+          }
+          return hashParams;
+        }
 
 class Main extends Component {
   constructor(props) {
@@ -18,13 +28,27 @@ class Main extends Component {
     }
   }
 
+  showUser = () => {
+    var params = getHashParams();
+
+    var access_token = params.access_token,
+            refresh_token = params.refresh_token,
+            error = params.error;
+    if (error) {
+          alert('There was an error during the authentication');
+        }
+
+  }
+
   saveTracks = (iTrack) => {
     let tracks = this.state.tracks;
     let savedTrack = tracks[iTrack];
     let artistArr = [];
-    savedTrack.artists.forEach((artist) => {
-      artistArr.push(artist.name);
-    })
+    savedTrack
+      .artists
+      .forEach((artist) => {
+        artistArr.push(artist.name);
+      })
 
     let trackObject = {
       trackName: savedTrack.name,
@@ -34,14 +58,14 @@ class Main extends Component {
       trackPreviewUrl: savedTrack.preview_url
     }
     console.log(trackObject);
-      APIManager.post('api/track', trackObject, (err, response) => {
-        if(err) {
-          console.log("error", err.message);
-          return;
-        }
-        console.log('TRACK SAVED', JSON.stringify(response));
+    APIManager.post('api/track', trackObject, (err, response) => {
+      if (err) {
+        console.log("error", err.message);
+        return;
+      }
+      console.log('TRACK SAVED', JSON.stringify(response));
 
-      });
+    });
   }
 
   searchSpotify = (query) => {
@@ -76,7 +100,6 @@ class Main extends Component {
           audio: audio
         }
       });
-      // {playing: true, playingUrl: previewUrl, audio: audio}
     } else {
       if (this.state.trackPlayer.playingUrl === previewUrl) {
         this
@@ -84,36 +107,41 @@ class Main extends Component {
           .trackPlayer
           .audio
           .pause();
-        this.setState(
-          {trackPlayer: {
-              playing: false
-            }
-           }
-          )
+        this.setState({
+          trackPlayer: {
+            playing: false
+          }
+        })
       } else {
         this
           .state
           .trackPlayer
           .audio
           .pause();
-        audio.play();        
+        audio.play();
         this.setState({playing: true, playingUrl: previewUrl, audio: audio})
       }
     }
   }
 
-
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
-        <SpotifySearchInput theSearch={this.searchSpotify}/>        
+        <SpotifySearchInput theSearch={this.searchSpotify}/> 
         {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
-              <TrackGallery tracks={this.state.tracks} fav={this.saveTracks} play={this.playAudio} currentSong={this.state.trackPlayer} />
+              <TrackGallery
+                tracks={this.state.tracks}
+                fav={this.saveTracks}
+                play={this.playAudio}
+                currentSong={this.state.trackPlayer}/>
             </div>
           : <div></div>
         }
+        <a
+          className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink no-underline"
+          href="/login">Log In</a>
       </div>
     );
   }

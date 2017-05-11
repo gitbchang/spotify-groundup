@@ -38,7 +38,7 @@ class SpotifySearchInput extends Component {
               <a
                 onClick={this.submitQuery}
                 className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink no-underline"                
-                href="#0">Search</a>
+                >Search</a>
             </div>
           </div>
         </form>
