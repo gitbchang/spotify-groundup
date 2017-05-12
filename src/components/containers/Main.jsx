@@ -4,16 +4,6 @@ import {SpotifySearchInput, ArtistProfile, TrackGallery} from '../presentation/'
 import {APIManager} from '../../utils/';
 import axios from 'axios';
 
-        function getHashParams() {
-          var hashParams = {};
-          var e, r = /([^&;=]+)=?([^&;]*)/g,
-              q = window.location.hash.substring(1);
-          while ( e = r.exec(q)) {
-             hashParams[e[1]] = decodeURIComponent(e[2]);
-          }
-          return hashParams;
-        }
-
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -24,19 +14,59 @@ class Main extends Component {
         playingUrl: '',
         audio: null,
         playing: false
+      },
+      spotifyAccessToken: '',
+      spotifyRefreshToken: ''
+    }
+  }
+
+  componentWillMount() {
+    this.storeUser();
+  }
+
+  storeUser = () => {
+    let params = this.getHashParams();
+
+    let access_token = params.access_token,
+      refresh_token = params.refresh_token,
+      error = params.error;
+
+    if (access_token) {
+      if (error) {
+        alert('There was an error during the authentication');
+      } else {
+        console.log('access', access_token);
+        this.setState({spotifyAccessToken: access_token, spotifyRefreshToken: refresh_token});
       }
     }
   }
 
-  showUser = () => {
-    var params = getHashParams();
+  getUserProfile = () => {
+    let access_token = this.state.spotifyAccessToken;
 
-    var access_token = params.access_token,
-            refresh_token = params.refresh_token,
-            error = params.error;
-    if (error) {
-          alert('There was an error during the authentication');
-        }
+    axios({
+      method:'get',
+      url:'https://api.spotify.com/v1/me',
+      headers: {'Authorization': 'Bearer ' + access_token},
+      responseType:'json'
+    })
+      .then(function(response) {
+        console.log('login response', response);
+    });
+  }
+
+  getHashParams = () => {
+    var hashParams = {};
+    var e,
+      r = /([^&;=]+)=?([^&;]*)/g,
+      q = window
+        .location
+        .hash
+        .substring(1);
+    while (e = r.exec(q)) {
+      hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
+    return hashParams;
 
   }
 
@@ -127,8 +157,7 @@ class Main extends Component {
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
-        <SpotifySearchInput theSearch={this.searchSpotify}/> 
-        {this.state.artist !== null
+        <SpotifySearchInput theSearch={this.searchSpotify}/> {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
               <TrackGallery
@@ -138,10 +167,15 @@ class Main extends Component {
                 currentSong={this.state.trackPlayer}/>
             </div>
           : <div></div>
-        }
+}
         <a
-          className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink no-underline"
+          className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink"
           href="/login">Log In</a>
+
+        <a
+          className="f6 link br2 ba ph3 pv2 mh2 mb2 dib white hover-hot-pink hover-bg-black"
+          onClick={this.getUserProfile}
+          href="/#">Stats</a>
       </div>
     );
   }

@@ -41,8 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/style', express.static(__dirname + '/node_modules/'));
 
 app.use('/', index);
-app.use('/api', api);
 app.use('/', login);
+app.use('/api', api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

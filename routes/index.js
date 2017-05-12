@@ -6,6 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home' });
 });
 
+router.get('/login', function(req, res, next) {
+  res.render('index', { title: 'Login Page' });
+});
+
 router.get('/datavisual', function(req, res, next) {
   res.render('index', { title: 'Data Visuals' });
 });
