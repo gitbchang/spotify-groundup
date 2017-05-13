@@ -21375,6 +21375,12 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(87);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _presentation = __webpack_require__(54);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21391,31 +21397,92 @@ var DataVisualization = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (DataVisualization.__proto__ || Object.getPrototypeOf(DataVisualization)).call(this, props));
 
-    _this.getSongStats = function () {
+    _this.getTopTracks = function () {
+      var self = _this;
       var access_token = localStorage.getItem('spotifyAccessToken');
 
-      axios({
+      (0, _axios2.default)({
         method: 'get',
         url: 'https://api.spotify.com/v1/me/top/tracks?limit=10',
         headers: { 'Authorization': 'Bearer ' + access_token },
         responseType: 'json'
-      }).then(function (response) {});
+      }).then(function (response) {
+        console.log(response.data.items);
+        var trackArray = response.data.items;
+        var currentTrackState = Object.assign([], self.state.topTracks);
+
+        trackArray.map(function (track, i) {
+          var trackObj = {
+            trackName: track.name,
+            artistNames: track.artists.map(function (artist) {
+              return artist.name;
+            }),
+            spotifyTrackId: track.id
+          };
+          currentTrackState.push(trackObj);
+        });
+
+        self.setState({
+          topTracks: currentTrackState
+        });
+      });
+    };
+
+    _this.getTopTrackIds = function (array) {
+      var trackIds = [];
+
+      array.map(function (track) {
+        trackIds.push(track.spotifyTrackId);
+      });
+      return trackIds;
+    };
+
+    _this.getAudioFeatures = function () {
+      var trackIds = _this.getTopTrackIds(_this.state.topTracks);
+      //  trackIds.toString();
+      // https://api.spotify.com/v1/audio-features?ids=
+      console.log('string track id', trackIds.toString());
+      var self = _this;
+      (0, _axios2.default)({
+        method: 'get',
+        url: 'https://api.spotify.com/v1/audio-features?ids=' + trackIds.toString(),
+        headers: { 'Authorization': 'Bearer ' + _this.state.spotifyAccessToken },
+        responseType: 'json'
+      }).then(function (response) {
+        console.log("track audio features", response.data.audio_features);
+        var audioFeaturesArray = response.data.audio_features;
+        // add each audio feature to the track object in state
+        var currentTrackState = Object.assign([], self.state.topTracks);
+      });
     };
 
     _this.state = {
       spotifyAccessToken: localStorage.getItem('spotifyAccessToken'),
-      spotifyRefreshToken: localStorage.getItem('spotifyRefreshToken')
+      spotifyRefreshToken: localStorage.getItem('spotifyRefreshToken'),
+      topTracks: []
     };
     return _this;
   }
 
   _createClass(DataVisualization, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getTopTracks();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'min-vh-100 pa5 ph7-l hot-pink' },
-        'Data Visualization!'
+        { className: 'min-vh-100 pa5 ph7-l' },
+        _react2.default.createElement(
+          'a',
+          {
+            className: 'f6 grow no-underline br-pill ba ph3 pv2 mb2 dib white hover-hot-pink pointer',
+            onClick: this.getAudioFeatures
+          },
+          'Get Audio Features'
+        )
       );
     }
   }]);
@@ -51738,10 +51805,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var DataWelcome = function (_Component) {
   _inherits(DataWelcome, _Component);
 
-  function DataWelcome() {
+  function DataWelcome(props) {
     _classCallCheck(this, DataWelcome);
 
-    return _possibleConstructorReturn(this, (DataWelcome.__proto__ || Object.getPrototypeOf(DataWelcome)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (DataWelcome.__proto__ || Object.getPrototypeOf(DataWelcome)).call(this, props));
+
+    _this.state = {
+      userProfile: localStorage.getItem('spotifyUserProfile')
+    };
+    return _this;
   }
 
   _createClass(DataWelcome, [{
