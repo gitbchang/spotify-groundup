@@ -9,8 +9,6 @@ const mongoose = require('mongoose');
 var dbUrl = 'mongodb://localhost/bchang-spotify';
 var dbHeroku = 'mongodb://heroku_n7gnhzpc:v40709mc50122j2cfava108ntl@ds129651.mlab.com:29651/heroku_n7gnhzpc';
 
-
-
 mongoose.connect(dbUrl, function(err, res){
   if(err){
     console.log('DB CONNECTION FAILED', err);
@@ -21,6 +19,7 @@ mongoose.connect(dbUrl, function(err, res){
 
 var index = require('./routes/index');
 var api = require('./routes/api');
+var login = require('./routes/login');
 
 
 
@@ -42,7 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/style', express.static(__dirname + '/node_modules/'));
 
 app.use('/', index);
+app.use('/', login);
 app.use('/api', api);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,7 +60,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
-});
+  res.render('error');});
+
+
 
 module.exports = app;

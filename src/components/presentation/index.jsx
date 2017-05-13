@@ -9,6 +9,7 @@ import SpotifySearchInput from './SpotifySearchInput';
 import ArtistProfile from './ArtistProfile';
 import TrackGallery from './TrackGallery';
 import FavoriteGallery from './FavoriteGallery';
+import DataWelcome from './DataWelcome';
 
 export {
   CreateComment,
@@ -21,5 +22,6 @@ export {
   SpotifySearchInput,
   ArtistProfile,
   TrackGallery,
-  FavoriteGallery
+  FavoriteGallery,
+  DataWelcome
 }
