@@ -63,7 +63,7 @@ class DataVisualization extends Component {
    let trackIds = this.getTopTrackIds(this.state.topTracks);
   //  trackIds.toString();
   // https://api.spotify.com/v1/audio-features?ids=
-   console.log('string track id', trackIds.toString());
+  //  console.log('string track id', trackIds.toString());
    const self = this;
     axios({
       method:'get',
@@ -76,7 +76,18 @@ class DataVisualization extends Component {
         let audioFeaturesArray = response.data.audio_features;
         // add each audio feature to the track object in state
         let currentTrackState = Object.assign([], self.state.topTracks);
+        console.log("current track state", currentTrackState);
+        for(var i = 0; i < currentTrackState.length; i++){
+          currentTrackState[i].acousticness = audioFeaturesArray[i].acousticness;
+          currentTrackState[i].danceability = audioFeaturesArray[i].danceability;
+          currentTrackState[i].instrumentalness = audioFeaturesArray[i].instrumentalness;
+          currentTrackState[i].liveness = audioFeaturesArray[i].liveness;
+          currentTrackState[i].loudness = audioFeaturesArray[i].loudness;
+          currentTrackState[i].energy = audioFeaturesArray[i].energy;
+          currentTrackState[i].tempo = audioFeaturesArray[i].tempo;
+          currentTrackState[i].valence = audioFeaturesArray[i].valence;
 
+        }
 
     });
   }

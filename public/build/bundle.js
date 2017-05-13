@@ -21441,7 +21441,7 @@ var DataVisualization = function (_Component) {
       var trackIds = _this.getTopTrackIds(_this.state.topTracks);
       //  trackIds.toString();
       // https://api.spotify.com/v1/audio-features?ids=
-      console.log('string track id', trackIds.toString());
+      //  console.log('string track id', trackIds.toString());
       var self = _this;
       (0, _axios2.default)({
         method: 'get',
@@ -21453,6 +21453,17 @@ var DataVisualization = function (_Component) {
         var audioFeaturesArray = response.data.audio_features;
         // add each audio feature to the track object in state
         var currentTrackState = Object.assign([], self.state.topTracks);
+        console.log("current track state", currentTrackState);
+        for (var i = 0; i < currentTrackState.length; i++) {
+          currentTrackState[i].acousticness = audioFeaturesArray[i].acousticness;
+          currentTrackState[i].danceability = audioFeaturesArray[i].danceability;
+          currentTrackState[i].instrumentalness = audioFeaturesArray[i].instrumentalness;
+          currentTrackState[i].liveness = audioFeaturesArray[i].liveness;
+          currentTrackState[i].loudness = audioFeaturesArray[i].loudness;
+          currentTrackState[i].energy = audioFeaturesArray[i].energy;
+          currentTrackState[i].tempo = audioFeaturesArray[i].tempo;
+          currentTrackState[i].valence = audioFeaturesArray[i].valence;
+        }
       });
     };
 
