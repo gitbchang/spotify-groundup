@@ -19,7 +19,7 @@ var generateRandomString = function(length) {
 
 const stateKey = 'spotify_auth_state';
 
-router.get('/login', function(req, res) {
+router.get('/api/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);

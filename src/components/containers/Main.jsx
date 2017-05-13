@@ -20,9 +20,15 @@ class Main extends Component {
     }
   }
 
-  componentWillMount() {
+   componentWillMount() {
     this.storeUser();
   }
+
+  componentDidMount() {
+    this.getUserProfile();
+  }
+  
+
 
   storeUser = () => {
     let params = this.getHashParams();
@@ -37,22 +43,33 @@ class Main extends Component {
       } else {
         console.log('access', access_token);
         this.setState({spotifyAccessToken: access_token, spotifyRefreshToken: refresh_token});
+        localStorage.setItem('spotifyAccessToken', access_token);
+        localStorage.setItem('spotifyRefreshToken', refresh_token);
       }
     }
   }
 
   getUserProfile = () => {
-    let access_token = this.state.spotifyAccessToken;
-
-    axios({
+    let access_token = localStorage.getItem('spotifyAccessToken');
+    if(access_token){
+      axios({
       method:'get',
       url:'https://api.spotify.com/v1/me',
       headers: {'Authorization': 'Bearer ' + access_token},
       responseType:'json'
     })
       .then(function(response) {
-        console.log('login response', response);
+        const userProfile = {
+          displayName: response.data.display_name,
+          email: response.data.email,
+          imageUrl: response.data.images[0].url,
+          product: response.data.product
+        };
+        localStorage.setItem('spotifyUserProfile', userProfile);
+        console.log('login response', userProfile);
     });
+    }
+    
   }
 
   getHashParams = () => {
@@ -157,7 +174,8 @@ class Main extends Component {
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
-        <SpotifySearchInput theSearch={this.searchSpotify}/> {this.state.artist !== null
+        <SpotifySearchInput theSearch={this.searchSpotify}/> 
+        {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
               <TrackGallery
@@ -167,15 +185,7 @@ class Main extends Component {
                 currentSong={this.state.trackPlayer}/>
             </div>
           : <div></div>
-}
-        <a
-          className="f6 link br2 ba ph3 pv2 mb2 dib white hover-hot-pink"
-          href="/login">Log In</a>
-
-        <a
-          className="f6 link br2 ba ph3 pv2 mh2 mb2 dib white hover-hot-pink hover-bg-black"
-          onClick={this.getUserProfile}
-          href="/#">Stats</a>
+        }
       </div>
     );
   }

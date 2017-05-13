@@ -14,7 +14,7 @@ class LoginPage extends Component {
         alert('There was an error during the authentication');
       } else {
         console.log('access', access_token);
-        this.setState({spotifyAccessToken: access_token, spotifyRefreshToken: refresh_token});
+
       }
     }
   }
@@ -47,13 +47,13 @@ class LoginPage extends Component {
     return hashParams;
 
   }
-  
+
   render() {
     return (
-      <div className="min-vh-100 dt w-100 bg-dark-pink">
+      <div className="vh-100 dt w-100 bg-dark-pink z-1">
           <div className="dtc v-mid tc white ph3 ph4-l">
             <h1 className="f6 f2-m f-subheadline-l fw6 tc">Log In for Stats!</h1>
-            <img src="/images/log_in.svg" className="dib mw6 br4" alt="Login Button" />
+            <a href="/api/login"><img src="/images/log_in.svg" className="dib grow mw6 br4" alt="Login Button" /></a>
           </div>
       </div>
     );

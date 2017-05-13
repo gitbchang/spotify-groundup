@@ -1,40 +1,28 @@
 import React, { Component } from 'react';
 
 class DataVisualization extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spotifyAccessToken: localStorage.getItem('spotifyAccessToken'),
+      spotifyRefreshToken: localStorage.getItem('spotifyRefreshToken')
+    }
+  }
+  
 
   getSongStats = () => {
     let access_token = localStorage.getItem('spotifyAccessToken');
 
     axios({
       method:'get',
-      url:'http://bit.ly/2mTM3nY',
+      url:'https://api.spotify.com/v1/me/top/tracks?limit=10',
       headers: {'Authorization': 'Bearer ' + access_token},
-      responseType:'stream'
+      responseType:'json'
     })
       .then(function(response) {
-  
+        
     });
 
-    /* 
-                $.ajax({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                  'Authorization': 'Bearer ' + access_token
-                },
-                success: function(response) {
-                  userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-
-                  $('#login').hide();
-                  $('#loggedin').show();
-                }
-            });
-          } else {
-              // render initial screen
-              $('#login').show();
-              $('#loggedin').hide();
-          }
-    
-    */
   }
 
   render() {

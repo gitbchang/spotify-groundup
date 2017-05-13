@@ -4,21 +4,12 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { Main, Zones, Comments, DataVisualization, Favorites, LoginPage } from '../containers/';
 import { SpotifyHome, SpotifyFooter, About } from '../presentation/';
 
-import styles from './styles';
+// import styles from './styles';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      spotifyAccessToken: '',
-      spotifyRefreshToken: '',
-    }
-  }
-  
-
+class Home extends Component {  
   render() {
     return (
-      <div className='bg-black-80'>
+      <div className='min-vh-100 bg-black-80'>
         <SpotifyHome />
           <Switch>
             <Route exact path='/' component={Main}/>
