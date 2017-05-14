@@ -21416,16 +21416,14 @@ var DataVisualization = function (_Component) {
       var barContainer = d3Selection.select('#d3area');
       var barChart = new _bar2.default();
       var tooltip = (0, _miniTooltip2.default)();
-      var toolTipContainer = d3Selection.select('#d3area .bar-chart .metadata-group');
+      var toolTipContainer;
       var dataset = _this.createBarChartData();
       if (barContainer.node()) {
-        barChart.margin({ left: 120, right: 20, top: 20, bottom: 5 }).percentageAxisToMaxRatio(1.3).yAxisPaddingBetweenChart(30).horizontal(true).colorSchema(_colors2.default.colorSchemas.britechartsColorSchema).width(700).height(300);
-        // .on('customMouseOver', tooltip.show) .on('customMouseMove', tooltip.update)
-        // .on('customMouseOut', tooltip.hide);
+        barChart.margin({ left: 120, right: 20, top: 20, bottom: 5 }).percentageAxisToMaxRatio(1.3).yAxisPaddingBetweenChart(30).horizontal(true).colorSchema(_colors2.default.colorSchemas.britechartsColorSchema).width(700).height(300).on('customMouseOver', tooltip.show).on('customMouseMove', tooltip.update).on('customMouseOut', tooltip.hide);
       }
       barContainer.datum(dataset).call(barChart);
-      // toolTipContainer.datum([]).call(tooltip);
-      _this.createBarChartData();
+      toolTipContainer = d3Selection.select('#d3area .bar-chart .metadata-group');
+      toolTipContainer.datum([]).call(tooltip);
     };
 
     _this.createBarChartData = function () {
