@@ -22,7 +22,7 @@ class DataVisualization extends Component {
     var barContainer = d3Selection.select('#d3area');
     var barChart = new BarChart();
     var tooltip = miniTooltip();
-    var toolTipContainer = d3Selection.select('#d3area .bar-chart .metadata-group');
+    var toolTipContainer; 
     const dataset = this.createBarChartData();
     if (barContainer.node()) {
       barChart
@@ -32,15 +32,16 @@ class DataVisualization extends Component {
         .horizontal(true)
         .colorSchema(colors.colorSchemas.britechartsColorSchema)
         .width(700)
-        .height(300);
-      // .on('customMouseOver', tooltip.show) .on('customMouseMove', tooltip.update)
-      // .on('customMouseOut', tooltip.hide);
+        .height(300)
+        .on('customMouseOver', tooltip.show) 
+        .on('customMouseMove', tooltip.update)
+        .on('customMouseOut', tooltip.hide);
     }
     barContainer
       .datum(dataset)
       .call(barChart);
-    // toolTipContainer.datum([]).call(tooltip);
-    this.createBarChartData();
+    toolTipContainer = d3Selection.select('#d3area .bar-chart .metadata-group');
+    toolTipContainer.datum([]).call(tooltip);
   }
   createBarChartData = () => {
     let currentTop10 = Object.assign([], this.state.topTracks);
