@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import LineChart from 'britecharts/dist/umd/line.min';
+import d3Selection from 'd3-selection';
 import { DataWelcome } from '../presentation';
 
 class DataVisualization extends Component {
@@ -14,7 +16,33 @@ class DataVisualization extends Component {
   
   componentDidMount() {
     this.getTopTracks();
+    setTimeout(this.createChart, 1000);
   }
+
+  createChart = () => {
+    let container = d3Selection.select('.js-chart-container');
+    let lineChart = new LineChart();
+
+      if (container.node()) {
+      lineChart
+          .tooltipThreshold(tooltipShouldShowThreshold)
+          .margin(chartMargin)
+          .height(chartHeight)
+          .width(chartWidth);          
+    }
+    container.datum(data).call(lineChart);
+  }
+
+  redrawChart = () => {
+    let container = d3.select('.js-chart-container');
+    let newContainerWidth = container.node() ? container.node().getBoundingClientRect().width : false;
+
+    // Setting the new width on the chart
+    lineChart.width(newContainerWidth);
+
+    // Rendering the chart again
+    container.datum(data).call(lineChart);
+};
   
   
   getTopTracks = () => {
@@ -63,7 +91,7 @@ class DataVisualization extends Component {
    let trackIds = this.getTopTrackIds(this.state.topTracks);
   //  trackIds.toString();
   // https://api.spotify.com/v1/audio-features?ids=
-   console.log('string track id', trackIds.toString());
+  //  console.log('string track id', trackIds.toString());
    const self = this;
     axios({
       method:'get',
@@ -76,7 +104,18 @@ class DataVisualization extends Component {
         let audioFeaturesArray = response.data.audio_features;
         // add each audio feature to the track object in state
         let currentTrackState = Object.assign([], self.state.topTracks);
-
+        console.log("current track state", currentTrackState);
+        for(var i = 0; i < currentTrackState.length; i++){
+          currentTrackState[i].acousticness = audioFeaturesArray[i].acousticness;
+          currentTrackState[i].danceability = audioFeaturesArray[i].danceability;
+          currentTrackState[i].instrumentalness = audioFeaturesArray[i].instrumentalness;
+          currentTrackState[i].liveness = audioFeaturesArray[i].liveness;
+          currentTrackState[i].loudness = audioFeaturesArray[i].loudness;
+          currentTrackState[i].energy = audioFeaturesArray[i].energy;
+          currentTrackState[i].tempo = audioFeaturesArray[i].tempo;
+          currentTrackState[i].valence = audioFeaturesArray[i].valence;
+        }
+        self.setState({topTracks: currentTrackState});
 
     });
   }
@@ -88,6 +127,7 @@ class DataVisualization extends Component {
         className="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib white hover-hot-pink pointer" 
         onClick={this.getAudioFeatures}
         >Get Audio Features</a>
+        <div className='js-chart-container'></div>
       </div>
     );
   }
