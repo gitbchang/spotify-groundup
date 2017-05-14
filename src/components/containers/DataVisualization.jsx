@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import LineChart from 'britecharts/dist/umd/line.min';
+import d3Selection from 'd3-selection';
 import { DataWelcome } from '../presentation';
 
 class DataVisualization extends Component {
@@ -14,7 +16,33 @@ class DataVisualization extends Component {
   
   componentDidMount() {
     this.getTopTracks();
+    setTimeout(this.createChart, 1000);
   }
+
+  createChart = () => {
+    let container = d3Selection.select('.js-chart-container');
+    let lineChart = new LineChart();
+
+      if (container.node()) {
+      lineChart
+          .tooltipThreshold(tooltipShouldShowThreshold)
+          .margin(chartMargin)
+          .height(chartHeight)
+          .width(chartWidth);          
+    }
+    container.datum(data).call(lineChart);
+  }
+
+  redrawChart = () => {
+    let container = d3.select('.js-chart-container');
+    let newContainerWidth = container.node() ? container.node().getBoundingClientRect().width : false;
+
+    // Setting the new width on the chart
+    lineChart.width(newContainerWidth);
+
+    // Rendering the chart again
+    container.datum(data).call(lineChart);
+};
   
   
   getTopTracks = () => {
@@ -86,8 +114,8 @@ class DataVisualization extends Component {
           currentTrackState[i].energy = audioFeaturesArray[i].energy;
           currentTrackState[i].tempo = audioFeaturesArray[i].tempo;
           currentTrackState[i].valence = audioFeaturesArray[i].valence;
-
         }
+        self.setState({topTracks: currentTrackState});
 
     });
   }
@@ -99,6 +127,7 @@ class DataVisualization extends Component {
         className="f6 grow no-underline br-pill ba ph3 pv2 mb2 dib white hover-hot-pink pointer" 
         onClick={this.getAudioFeatures}
         >Get Audio Features</a>
+        <div className='js-chart-container'></div>
       </div>
     );
   }
