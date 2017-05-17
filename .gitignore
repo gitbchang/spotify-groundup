@@ -5,13 +5,13 @@
 /public/semantic
 
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
 
 # production
-/public/build
+public/build
 
 # misc
 .DS_Store
