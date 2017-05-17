@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 var dbUrl = 'mongodb://localhost/bchang-spotify';
-var dbHeroku = 'mongodb://heroku_n7gnhzpc:v40709mc50122j2cfava108ntl@ds129651.mlab.com:29651/heroku_n7gnhzpc';
+var dbHeroku = 'mongodb://bchang1:123456@ds143231.mlab.com:43231/heroku_qr71zgzp';
 
 mongoose.connect(dbHeroku, function(err, res){
   if(err){
