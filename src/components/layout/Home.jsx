@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
-import { Main, Zones, Comments, DataVisualization, Favorites, LoginPage } from '../containers/';
+import { Main, DataVisualization, Favorites, LoginPage } from '../containers/';
 import { SpotifyHome, SpotifyFooter, About } from '../presentation/';
 
 // import styles from './styles';
