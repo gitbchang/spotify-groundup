@@ -5,7 +5,7 @@ var querystring = require('querystring');
 
 const client_id = '1f355714cb774cb4a4dbb60a6f035eb2'; // Your client id
 const client_secret = '563cfb4fc8894913807215842f1c34c4'; // Your secret
-const redirect_uri = 'https://spotify-groundup.herokuapp.com/callback'; // Your redirect uri
+const redirect_uri = 'http://node-express-env.iizhu2v372.us-west-2.elasticbeanstalk.com/'; // Your redirect uri
 // https://spotify-groundup.herokuapp.com/callback
 // http://localhost:3000/callback
 
