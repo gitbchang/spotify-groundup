@@ -22810,12 +22810,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(99);
 
-var rootReducer = (0, _redux.combineReducers)({
-  state: function state() {
-    var _state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+var _reducer_login = __webpack_require__(768);
 
-    return _state;
-  }
+var _reducer_login2 = _interopRequireDefault(_reducer_login);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var rootReducer = (0, _redux.combineReducers)({
+  login: _reducer_login2.default
 });
 
 exports.default = rootReducer;
@@ -64631,6 +64633,76 @@ if (typeof module === 'object' && typeof module.exports === 'object') {
   module.exports = SpotifyWebApi;
 }
 
+
+/***/ }),
+/* 768 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = reduce;
+
+var _actions = __webpack_require__(766);
+
+/** The initial state; no tokens and no user info */
+var initialState = {
+  accessToken: null,
+  refreshToken: null,
+  user: {
+    loading: false,
+    country: null,
+    display_name: null,
+    email: null,
+    external_urls: {},
+    followers: {},
+    href: null,
+    id: null,
+    images: [],
+    product: null,
+    type: null,
+    uri: null
+  }
+};
+
+/**
+ * Our reducer
+ */
+function reduce() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    // when we get the tokens... set the tokens!
+    case _actions.SPOTIFY_TOKENS:
+      var accessToken = action.accessToken,
+          refreshToken = action.refreshToken;
+
+      return Object.assign({}, state, { accessToken: accessToken, refreshToken: refreshToken });
+
+    // set our loading property when the loading begins
+    case _actions.SPOTIFY_ME_BEGIN:
+      return Object.assign({}, state, {
+        user: Object.assign({}, state.user, { loading: true })
+      });
+
+    // when we get the data merge it in
+    case _actions.SPOTIFY_ME_SUCCESS:
+      return Object.assign({}, state, {
+        user: Object.assign({}, state.user, action.data, { loading: false })
+      });
+
+    // currently no failure state :(
+    case _actions.SPOTIFY_ME_FAILURE:
+      return state;
+
+    default:
+      return state;
+  }
+}
 
 /***/ })
 /******/ ]);
