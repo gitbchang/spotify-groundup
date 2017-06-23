@@ -20,15 +20,13 @@ class Main extends Component {
     }
   }
 
-   componentWillMount() {
+  componentWillMount() {
     this.storeUser();
   }
 
   componentDidMount() {
     this.getUserProfile();
   }
-  
-
 
   storeUser = () => {
     let params = this.getHashParams();
@@ -51,25 +49,27 @@ class Main extends Component {
 
   getUserProfile = () => {
     let access_token = localStorage.getItem('spotifyAccessToken');
-    if(access_token){
+    if (access_token) {
       axios({
-      method:'get',
-      url:'https://api.spotify.com/v1/me',
-      headers: {'Authorization': 'Bearer ' + access_token},
-      responseType:'json'
-    })
-      .then(function(response) {
-        const userProfile = {
-          displayName: response.data.display_name,
-          email: response.data.email,
-          imageUrl: response.data.images[0].url,
-          product: response.data.product
-        };
-        localStorage.setItem('spotifyUserProfile', userProfile);
-        console.log('login response', userProfile);
-    });
+        method: 'get',
+        url: 'https://api.spotify.com/v1/me',
+        headers: {
+          'Authorization': 'Bearer ' + access_token
+        },
+          responseType: 'json'
+        })
+        .then(function (response) {
+          const userProfile = {
+            displayName: response.data.display_name,
+            email: response.data.email,
+            imageUrl: response.data.images[0].url,
+            product: response.data.product
+          };
+          localStorage.setItem('spotifyUserProfile', userProfile);
+          console.log('login response', userProfile);
+        });
     }
-    
+
   }
 
   getHashParams = () => {
@@ -118,22 +118,33 @@ class Main extends Component {
   searchSpotify = (query) => {
     const BASE_URL = 'https://api.spotify.com/v1/search';
     let FETCH_URL = `${BASE_URL}?q=${query}&type=artist&limit=1`;
+    /// xxx - store access token in the redux store
+    let access_token = localStorage.getItem('spotifyAccessToken');
     const ALBUM_URL = `https://api.spotify.com/v1/artists/`;
     const self = this;
     console.log("FROM THE MAIN", query);
     // First we query for the artist to get the artist id
-    axios({method: 'get', url: FETCH_URL, responseType: 'json'}).then(function (response) {
-      console.log('response', response);
-      const artist = response.data.artists.items[0];
-      self.setState({artist: artist});
-    }).then(() => {
-      // Use the artist ID to get their top tracks
-      FETCH_URL = FETCH_URL = `${ALBUM_URL}${self.state.artist.id}/top-tracks?country=US&`;
-      axios({method: 'get', url: FETCH_URL, responseType: 'json'}).then(function (response) {
-        console.log('artist top tracks', response);
-        self.setState({tracks: response.data.tracks, test: true});
+    axios({
+      method: 'get',
+      url: FETCH_URL,
+      headers: {
+        'Authorization': 'Bearer ' + access_token
+      },
+        responseType: 'json'
+      })
+      .then(function (response) {
+        console.log('response', response);
+        const artist = response.data.artists.items[0];
+        self.setState({artist: artist});
+      })
+      .then(() => {
+        // Use the artist ID to get their top tracks
+        FETCH_URL = FETCH_URL = `${ALBUM_URL}${self.state.artist.id}/top-tracks?country=US&`;
+        axios({method: 'get', url: FETCH_URL, responseType: 'json'}).then(function (response) {
+          console.log('artist top tracks', response);
+          self.setState({tracks: response.data.tracks, test: true});
+        });
       });
-    });
   }
 
   playAudio = (previewUrl) => {
@@ -174,8 +185,7 @@ class Main extends Component {
   render() {
     return (
       <div className='min-vh-100 pa5 ph7-l'>
-        <SpotifySearchInput theSearch={this.searchSpotify}/> 
-        {this.state.artist !== null
+        <SpotifySearchInput theSearch={this.searchSpotify}/> {this.state.artist !== null
           ? <div>
               <ArtistProfile searchArtist={this.state.artist}/>
               <TrackGallery
@@ -185,7 +195,7 @@ class Main extends Component {
                 currentSong={this.state.trackPlayer}/>
             </div>
           : <div></div>
-        }
+}
       </div>
     );
   }

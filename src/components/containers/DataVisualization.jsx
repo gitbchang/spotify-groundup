@@ -90,6 +90,7 @@ class DataVisualization extends Component {
   // again container.datum(data).call(lineChart); };
   getTopTracks = () => {
     const self = this;
+    // xxx - change access token to get from redux store
     let access_token = localStorage.getItem('spotifyAccessToken');
     axios({
       method: 'get',
