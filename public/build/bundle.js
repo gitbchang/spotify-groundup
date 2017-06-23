@@ -21965,7 +21965,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 // import styles from './styles';
-
+// xxx - revert to login screen if user is not logged in
 var Home = function (_Component) {
   _inherits(Home, _Component);
 
@@ -23481,7 +23481,14 @@ var Main = function (_Component) {
       }).then(function () {
         // Use the artist ID to get their top tracks
         FETCH_URL = FETCH_URL = '' + ALBUM_URL + self.state.artist.id + '/top-tracks?country=US&';
-        (0, _axios2.default)({ method: 'get', url: FETCH_URL, responseType: 'json' }).then(function (response) {
+        (0, _axios2.default)({
+          method: 'get',
+          url: FETCH_URL,
+          headers: {
+            'Authorization': 'Bearer ' + access_token
+          },
+          responseType: 'json'
+        }).then(function (response) {
           console.log('artist top tracks', response);
           self.setState({ tracks: response.data.tracks, test: true });
         });

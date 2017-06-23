@@ -5,7 +5,7 @@ import { Main, DataVisualization, Favorites, LoginPage } from '../containers/';
 import { SpotifyHome, SpotifyFooter, About } from '../presentation/';
 
 // import styles from './styles';
-
+// xxx - revert to login screen if user is not logged in
 class Home extends Component {  
   render() {
     return (

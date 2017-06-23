@@ -140,10 +140,18 @@ class Main extends Component {
       .then(() => {
         // Use the artist ID to get their top tracks
         FETCH_URL = FETCH_URL = `${ALBUM_URL}${self.state.artist.id}/top-tracks?country=US&`;
-        axios({method: 'get', url: FETCH_URL, responseType: 'json'}).then(function (response) {
-          console.log('artist top tracks', response);
-          self.setState({tracks: response.data.tracks, test: true});
-        });
+        axios({
+          method: 'get',
+          url: FETCH_URL,
+          headers: {
+            'Authorization': 'Bearer ' + access_token
+          },
+            responseType: 'json'
+          })
+          .then(function (response) {
+            console.log('artist top tracks', response);
+            self.setState({tracks: response.data.tracks, test: true});
+          });
       });
   }
 
