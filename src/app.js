@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import promise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 import Home from './components/layout/Home';
@@ -11,7 +12,7 @@ import Home from './components/layout/Home';
 // redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // redux store
-const createStoreWithMiddleware = composeEnhancers(applyMiddleware(promise))(createStore);
+const createStoreWithMiddleware = composeEnhancers(applyMiddleware(thunk))(createStore);
 
 class App extends Component {
   render() {

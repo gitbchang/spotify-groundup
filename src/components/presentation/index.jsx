@@ -1,5 +1,3 @@
-import CreateComment from './CreateComment';
-import CreateZone from './CreateZone';
 import Comment from './Comment';
 import Zone from './Zone';
 import SpotifyHome from './SpotifyHome';
@@ -12,9 +10,7 @@ import FavoriteGallery from './FavoriteGallery';
 import DataWelcome from './DataWelcome';
 
 export {
-  CreateComment,
   Comment,
-  CreateZone,
   Zone,
   SpotifyFooter,
   SpotifyHome,

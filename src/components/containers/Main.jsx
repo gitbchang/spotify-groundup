@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-
+import { connect } from 'react-redux';
+import {
+  getMyInfo,
+  setTokens,
+}   from '../../actions/';
 import {SpotifySearchInput, ArtistProfile, TrackGallery} from '../presentation/';
 import {APIManager} from '../../utils/';
 import axios from 'axios';
